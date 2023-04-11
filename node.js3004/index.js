@@ -19,8 +19,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/cliente/buscar/email/:email', (req, res) => {
-  const query = 'SELECT customers.*, customerTypes.name AS customerType FROM customers JOIN customerTypes ON customers.customerTypes_id = customerTypes.customerTypes_id WHERE customers.email = ?;';
-  // const query = 'SELECT clientes.*, tiposdeclientes.tipos FROM clientes JOIN tiposdeclientes ON clientes.idtiposdeclientes = tiposdeclientes.idtiposdeclientes WHERE clientes.email = ?;';
+const query = 'SELECT clientes.*, tiposdeclientes.tipos FROM clientes JOIN tiposdeclientes ON clientes.idtiposdeclientes = tiposdeclientes.idtiposdeclientes WHERE clientes.email = ?;';
 
   connection.query(query, [req.params.email], (_err, result) => {
     res.send(result.at(-1));

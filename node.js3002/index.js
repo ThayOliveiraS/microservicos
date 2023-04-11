@@ -6,8 +6,7 @@ import multer from 'multer';
 
 const conexao = mysql.createConnection
 ({
-    host: 'localhost',
-    port: 3306,
+    host: 'mysql1',
     user: 'root',
     password: '123456',
     database: 'db'
@@ -32,12 +31,11 @@ conexao.connect(err => {
 });
 
 app.post('/cliente/gravar', (req, res) => {
-    const {idcliente, nome, telefone, email, logradouro, numero, complemento, bairro, cidade, uf, cep, idtipo_cliente,tipo} = req.body;
+    const {nome, telefone, email, logradouro, numero, complemento, bairro, cidade, uf, cep, idtiposdeclientes} = req.body;
 
-    const sql = 'INSERT INTO clientes (idcliente, nome, email, telefone, logradouro, numero, complemento, bairro, cidade, cep, idtipo_cliente, uf) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    const sql2 = 'INSERT INTO tipo_cliente (idtipo_cliente, tipo) VALUES (?, ?)';
+    const sql = 'INSERT INTO clientes (nome, email, telefone, logradouro, numero, complemento, bairro, cidade, uf, cep, idtiposdeclientes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
    
-    conexao.query(sql, [ idcliente, nome, email, telefone, logradouro, numero, complemento, bairro, cidade, cep, idtipo_cliente, uf,tipo], (err, result) => {
+    conexao.query(sql, [nome, email, telefone, logradouro, numero, complemento, bairro, cidade, uf, cep, idtiposdeclientes], (err, result) => {
       if (err) {
         console.log(`Erro ao inserir dados no banco de dados: ${err.message}`);
         res.status(500).send('Erro interno do servidor');
